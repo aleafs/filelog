@@ -7,7 +7,8 @@
     "description": "Mysql client in cluster mode, based on node-mysql",
     "keywords": [ "mysql", "cluster" ],
     "dependencies": {
-      "moment" : "=1.7.2"
+      "moment" : "=1.7.2",
+      "mkdirp" : "=0.3.4"
     },
     "engines": {
       "node": ">=0.6.9"

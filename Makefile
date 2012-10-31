@@ -14,6 +14,6 @@ test: install
 cov: install
 	@-rm -rf ./lib-cov
 	@$(JSCOVERAGE) ./lib ./lib-cov
-	@MYSQL_CLUSTER_COV=1 $(MOCHA) --reporter html-cov > ./coverage.html
+	@LEVEL_LOG_COV=1 $(MOCHA) --reporter html-cov > ./coverage.html
 
 .PHONY: test install
