@@ -1,0 +1,24 @@
+{
+  "name": "levelog",
+    "version": "0.0.1",
+    "author": "Aleafs Zhang (zhangxc83@gmail.com)",
+    "contributors": [],
+    "homepage": "git@github.com:aleafs/mysql-cluster.git",
+    "description": "Mysql client in cluster mode, based on node-mysql",
+    "keywords": [ "mysql", "cluster" ],
+    "dependencies": {
+      "moment" : "=1.7.2"
+    },
+    "engines": {
+      "node": ">=0.6.9"
+    },
+    "devDependencies": {
+      "mocha"  : ">=0.9.0",
+      "should" : ">=0.4.2",
+      "visionmedia-jscoverage" : ">=1.0.0"
+    },
+    "main": "./index.js",
+    "scripts": {
+      "test": "make test"
+    }
+}
