@@ -47,4 +47,4 @@ filelog.logException(new Error('test'));
 
 ## License
 
-[MIT](blob/master/LICENSE)
+[MIT](master/LICENSE)
