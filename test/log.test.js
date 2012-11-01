@@ -167,7 +167,9 @@ describe('file log', function() {
 
   /* {{{ should_log_rotate_works_fine() */
   it('should_log_rotate_works_fine', function (done) {
-    var _me = Log.create({'file' : __dirname + '/tmp/rotate.{HH:mm:ss}.log'});
+    var _me = Log.create({
+      'file' : __dirname + '/tmp/rotate.{HH:mm:ss}.log',
+    });
     var _fn = _me.__logfile();
     _me.notice('time1');
     process.nextTick(function () {
