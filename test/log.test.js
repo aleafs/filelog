@@ -110,10 +110,39 @@ describe('file log', function() {
   });
   /* }}} */
 
+  /* {{{ should_console_log_when_open_fail() */
   it('should_console_log_when_open_fail', function (done) {
     var _me = Log.create({'file' : ''});
     _me.error('console.log');
     done();
   });
+  /* }}} */
+
+  /* {{{ should_log_rotate_works_fine() */
+  it('should_log_rotate_works_fine', function (done) {
+    var _me = Log.create({'file' : __dirname + '/tmp/rotate.{HH:mm:ss}.log'});
+    var _fn = _me.__logfile();
+    _me.notice('time1');
+    process.nextTick(function () {
+      fs.readFile(_fn, 'utf8', function (e, data) {
+        should.ok(!e);
+        data.should.include('time1');
+        setTimeout(function () {
+          _me.notice('time2');
+          _me.__logfile().should.not.eql(_fn);
+          _fn = _me.__logfile();
+          process.nextTick(function () {
+            fs.readFile(_fn, 'utf8', function (e, data) {
+              should.ok(!e);
+              data.should.not.include('time1');
+              data.should.include('time2');
+              done();
+            });
+          });
+        }, 1010);
+      });
+    });
+  });
+  /* }}} */
 
 });
