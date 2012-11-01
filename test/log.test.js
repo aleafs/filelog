@@ -82,21 +82,20 @@ describe('file log', function() {
   /* }}} */
 
   /* {{{ should_exception_log_works_fine() */
-  xit('should_exception_log_works_fine', function (done) {
+  it('should_exception_log_works_fine', function (done) {
     var _fn = __dirname + '/tmp/test.log';
-    try {
-      fs.unlinkSync(_fn);
-    } catch (e) {}
-
     Log.setExceptionLogger({'file' : _fn, 'level' : Log.WARN});
-    Log.exception({'a' : 'I will not be loged'});
+
+    Log.logException({'a' : 'I will not be loged'});
 
     var err = new Error('hello');
-    Log.exception(err, {'key1' : 'value1', 'key2' : ['value2\naa']});
+    Log.logException(err, {'key1' : 'value1', 'key2' : ['value2\naa']});
 
+    /**
+     * @ err对象不能被修改
+     */
     err.name.should.eql('Error');
 
-    process.emit('exit');
     setTimeout(function() {
       var _text = fs.readFileSync(_fn, 'utf8');
       _text.should.not.include('I will not be loged');
@@ -104,7 +103,7 @@ describe('file log', function() {
       _text.should.include(err.stack);
       _text.should.include('key2: ["value2\\naa"]');
       done();
-    }, 100);
+    }, 50);
   });
   /* }}} */
 
