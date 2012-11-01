@@ -6,7 +6,8 @@
 
 * 日志分级，并且可根据需要动态调整日志级别；
 * 根据时间进行日志文件的自动切割；
-* 对Error对象堆栈的记录，支持将全局Error记录在同一个文件，便于监控分析。
+* 对Error对象堆栈的记录，支持将全局Error记录在同一个文件，便于监控分析；
+* 支持对日志行进行自定义formatter。
 
 ## Install
 
@@ -49,6 +50,15 @@ filelog.setExceptionLogger({'file' : 'error.log'});
 filelog.logException(new Error('test'));
 ```
 
+* 自定义日志格式：
+
+```javascript
+var _me = filelog.create({'file' : null});
+_me.setFormatter(function (msg, level) {
+  return "HELLO " + msg;
+});
+_me.notice('world');
+```
 ## License
 
 [MIT](LICENSE)
