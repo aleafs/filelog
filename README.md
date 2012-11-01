@@ -2,7 +2,11 @@
 
 ## About
 
-`filelog` is a simple text log writer for Node.js.
+`filelog` 是一个简单的本地文件日志类，提供的特性有：
+
+* 日志分级，并且可根据需要动态调整日志级别；
+* 根据时间进行日志文件的自动切割；
+* 对Error对象堆栈的记录，支持将全局Error记录在同一个文件，便于监控分析。
 
 ## Install
 
