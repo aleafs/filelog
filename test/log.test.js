@@ -43,17 +43,20 @@ describe('file log', function() {
     _me.debug('aa i will be ignore');
     _me.notice('bb i am a bad boy');
     _me.warn('cc i am a bad boy');
+    _me.setLogLevel(Log.ERROR | Log.DEBUG);
     _me.error('dd i am a bad boy');
+    _me.debug('debug2');
     _me.close();
     _me.error('ee i am a bad boy');
 
     setTimeout(function() {
       var _text = fs.readFileSync(_fn, 'utf8');
 
-      _text.should.not.include("DEBUG:\t");
+      _text.should.not.include("aa i will be ignore");
       _text.should.not.include("NOTICE:\t");
       _text.should.include("WARN:\t");
       _text.should.include("ERROR:\t");
+      _text.should.include('debug2');
       _text.should.not.include("ee i am a bad boy");
 
       done();
@@ -106,5 +109,11 @@ describe('file log', function() {
     }, 50);
   });
   /* }}} */
+
+  it('should_console_log_when_open_fail', function (done) {
+    var _me = Log.create({'file' : ''});
+    _me.error('console.log');
+    done();
+  });
 
 });
