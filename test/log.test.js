@@ -22,12 +22,12 @@ describe('file log', function() {
     });
     _me.debug('i will be ignore');
     _me.notice("i am a bad boy");
-    _me.close();
     setTimeout(function() {
       var _text = fs.readFileSync(_me.__logfile(), 'utf-8');
       _text.should.not.include("DEBUG:\t");
       _text.should.include("NOTICE:\t");
       _text.should.include("\"i am a bad boy\"");
+      _me.close();
       done();
     }, 50);
   });
@@ -121,12 +121,11 @@ describe('file log', function() {
     _me.debug('test0');
     _me.notice('test1');
     _me.warn('test2');
-
-    _me.close();
     setTimeout(function () {
       fs.readFile(_me.__logfile(), 'utf8', function (e, data) {
         should.ok(!e);
         data.should.eql('HELLO test1\nHELLO test2\n');
+        _me.close();
         done();
       });
     }, 50);
@@ -138,6 +137,31 @@ describe('file log', function() {
     var _me = Log.create({'file' : ''});
     _me.error('console.log');
     done();
+  });
+  /* }}} */
+
+  /* {{{ should_log_works_fine_after_file_rename() */
+  it('should_log_works_fine_after_file_rename', function (done) {
+    var _fn = __dirname + '/tmp/test.log';
+    var _me = Log.create({
+      'file'  : _fn,
+    });
+    var cmd = require('util').format('mv "%s" "%s.tmp"', _fn, _fn);
+    _me.notice('test1');
+
+    exec(cmd, function (error) {
+      should.ok(!error);
+      setTimeout(function () {
+        _me.notice('test2');
+        setTimeout(function () {
+          fs.readFile(_fn, 'utf8', function (e, data) {
+            should.ok(!e);
+            data.should.include('test2');
+            done();
+          });
+        }, 50);
+      }, 600);
+    });
   });
   /* }}} */
 
@@ -159,6 +183,7 @@ describe('file log', function() {
               should.ok(!e);
               data.should.not.include('time1');
               data.should.include('time2');
+              _me.close();
               done();
             });
           });
