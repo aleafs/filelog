@@ -102,7 +102,7 @@ describe('file log', function() {
     setTimeout(function() {
       var _text = fs.readFileSync(_fn, 'utf8');
       _text.should.not.include('I will not be loged');
-      _text.should.include('ErrorException');
+      _text.should.include(' nodejs.ErrorException:');
       _text.should.include(err.stack);
       _text.should.include('key2: ["value2\\naa"]');
       done();
