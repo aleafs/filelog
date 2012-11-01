@@ -2,33 +2,32 @@
 
 var should  = require('should');
 var fs  = require('fs');
+var exec = require('child_process').exec;
 var Log = require(__dirname + '/../');
 
 describe('file log', function() {
 
   /* {{{ should_log_create_and_write_works_fine() */
   it ('should_log_create_and_write_works_fine', function(done) {
-    var _fn = __dirname + '/{YYYY}/test-{MM-DD}.log';
+    var _fn = __dirname + '/tmp/{YYYY}/test-{MM-DD}.log';
 
-    try {
-      fs.unlinkSync(_fn);
-    } catch (e) {}
-
-    var _me = Log.create({
-      'file'  : _fn
+    exec('rm -rf "' + __dirname + '/tmp"', function (error, stdout) {
+      should.ok(!error);
+      console.log(stdout);
+      var _me = Log.create({
+        'file'  : _fn
+      });
+      _me.debug('i will be ignore');
+      _me.notice("i am a bad boy");
+      _me.close();
+      setTimeout(function() {
+        var _text = fs.readFileSync(_me.__logfile(), 'utf-8');
+        _text.should.not.include("DEBUG:\t");
+        _text.should.include("NOTICE:\t");
+        _text.should.include("\"i am a bad boy\"");
+        done();
+      }, 100);
     });
-
-    _me.debug('bb', 'i will be ignore');
-    _me.notice('aa', "i am a bad boy");
-
-    setTimeout(function() {
-      var _text = fs.readFileSync(_fn, 'utf-8');
-      _text.should.not.include("DEBUG:\t");
-      _text.should.include("NOTICE:\t");
-      _text.should.include("\tAA\t\"i am a bad boy\"");
-      done();
-    }, 100);
-
   });
   /* }}} */
 
