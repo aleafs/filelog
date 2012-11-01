@@ -18,7 +18,10 @@ $ npm install filelog
 
 var filelog = require('filelog');
 
-var log = filelog.create({'file' : 'a.log', 'level' : filelog.WARN | filelog.ERROR});
+var log = filelog.create({
+  'file' : 'a.log', 
+  'level' : filelog.WARN | filelog.ERROR
+});
 log.debug('ignore');
 log.warn('warn1');
 
@@ -44,3 +47,4 @@ filelog.logException(new Error('test'));
 
 ## License
 
+[MIT](filelog/blob/master/LICENSE)
