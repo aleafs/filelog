@@ -146,7 +146,7 @@ describe('file log', function() {
     var _me = Log.create({
       'file'  : _fn,
     });
-    var cmd = require('util').format('mv "%s" "%s.tmp"', _fn, _fn);
+    var cmd = require('util').format('rm -f "%s" && touch "%s"', _fn, _fn);
     _me.notice('test1');
 
     exec(cmd, function (error) {
