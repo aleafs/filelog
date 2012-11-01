@@ -35,6 +35,7 @@ log.notice('notice');
 ```
 
 * 将所有异常都记录到同一个日志中:
+
 ```javascript
 
 filelog.setExceptionLogger({'file' : 'error.log'});
