@@ -8,14 +8,14 @@ describe('file log', function() {
 
   /* {{{ should_log_create_and_write_works_fine() */
   it ('should_log_create_and_write_works_fine', function(done) {
-    var _fn = __dirname + '/tmp/test.log';
+    var _fn = __dirname + '/{YYYY}/test-{MM-DD}.log';
 
     try {
       fs.unlinkSync(_fn);
     } catch (e) {}
 
     var _me = Log.create({
-      'file'  : _fn, 'buffer' : 0,
+      'file'  : _fn
     });
 
     _me.debug('bb', 'i will be ignore');
@@ -33,7 +33,7 @@ describe('file log', function() {
   /* }}} */
 
   /* {{{ should_set_log_level_works_fine() */
-  it ('should_set_log_level_works_fine', function(done) {
+  xit ('should_set_log_level_works_fine', function(done) {
     var _fn = __dirname + '/tmp/test.log';
 
     try {
@@ -66,7 +66,7 @@ describe('file log', function() {
   /* }}} */
 
   /* {{{ should_log_append_write_works_fine() */
-  it('should_log_append_write_works_fine', function(done) {
+  xit('should_log_append_write_works_fine', function(done) {
     var _fn = __dirname + '/tmp/test.log';
     try {
       fs.unlinkSync(_fn);
@@ -89,19 +89,8 @@ describe('file log', function() {
   });
   /* }}} */
 
-  /* {{{ should_log_blackhole_works_fine() */
-  it('should_log_blackhole_works_fine', function() {
-    var _log = require(__dirname + '/../../lib/blackhole/log.js').create();
-    _log.should.have.property('debug');
-    _log.should.have.property('notice');
-    _log.should.have.property('warn');
-    _log.should.have.property('error');
-    _log.should.have.property('close');
-  });
-  /* }}} */
-
   /* {{{ should_exception_log_works_fine() */
-  it('should_exception_log_works_fine', function (done) {
+  xit('should_exception_log_works_fine', function (done) {
     var _fn = __dirname + '/tmp/test.log';
     try {
       fs.unlinkSync(_fn);
@@ -124,29 +113,6 @@ describe('file log', function() {
       _text.should.include('key2: ["value2\\naa"]');
       done();
     }, 100);
-  });
-  /* }}} */
-
-  /* {{{ should_log_flush_to_file_when_process_exit() */
-  it('should_log_flush_to_file_when_process_exit', function (done) {
-    var _fn = __dirname + '/tmp/test.log';
-    try {
-      fs.unlinkSync(_fn);
-    } catch (e) {}
-
-    var _me = Log.create({
-      'file'  : _fn, 'buffer' : 1024,
-    });
-
-    _me.notice('HELLO', 'world1');
-    _me.notice('HELLO', 'world2');
-    process.emit('exit');
-
-    fs.readFile(_fn, 'utf8', function (error, data) {
-      data.should.include("\tHELLO\t\"world1\"");
-      data.should.include("\tHELLO\t\"world2\"");
-      done();
-    });
   });
   /* }}} */
 
