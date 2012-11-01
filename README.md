@@ -47,4 +47,4 @@ filelog.logException(new Error('test'));
 
 ## License
 
-[MIT](master/LICENSE)
+[MIT](LICENSE)
