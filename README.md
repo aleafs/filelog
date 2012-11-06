@@ -57,7 +57,7 @@ filelog.logException(new Error('test'));
 
 ```javascript
 var _me = filelog.create({'file' : null});
-_me.setFormatter(function (msg, level) {
+_me.setFormatter(function (level, msg) {
   return "HELLO " + msg;
 });
 _me.notice('world');
