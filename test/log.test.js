@@ -114,17 +114,17 @@ describe('file log', function() {
   it('should_my_formatter_works_fine', function (done) {
     var _fn = __dirname + '/tmp/test.log';
     var _me = Log.create({'file' : _fn});
-    _me.setFormatter(function (msg, level) {
-      return 'HELLO ' + msg;
+    _me.setFormatter(function (level, tag, msg) {
+      return 'HELLO\t[' + tag + '] ' + msg;
     });
 
-    _me.debug('test0');
-    _me.notice('test1');
-    _me.warn('test2');
+    _me.debug('tag0', 'test0');
+    _me.notice('tag1', 'test1');
+    _me.warn('tag2', 'test2');
     setTimeout(function () {
       fs.readFile(_me.__logfile(), 'utf8', function (e, data) {
         should.ok(!e);
-        data.should.eql('HELLO test1\nHELLO test2\n');
+        data.should.eql('HELLO\t[tag1] test1\nHELLO\t[tag2] test2\n');
         _me.close();
         done();
       });
