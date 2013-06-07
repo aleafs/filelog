@@ -1,4 +1,5 @@
 [![Build Status](https://secure.travis-ci.org/aleafs/filelog.png?branch=master)](http://travis-ci.org/aleafs/filelog)
+[![Dependency Status](https://gemnasium.com/aleafs/filelog.png)](https://gemnasium.com/aleafs/filelog)
 
 Test coverage [100%](http://aleafs.github.com/coverage/filelog.html), use jscoverage.
 
