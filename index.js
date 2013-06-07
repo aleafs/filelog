@@ -2,5 +2,5 @@
 
 "use strict";
 
-module.exports = require(__dirname + (process.env.LEVEL_LOG_COV ? '/lib-cov' : '/lib') + '/log.js');
+module.exports = require(__dirname + (process.env.FILELOG_COV ? '/lib-cov' : '/lib') + '/log.js');
 

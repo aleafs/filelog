@@ -1,20 +1,21 @@
 TESTS = test/*.test.js
 REPORTER = spec
 TIMEOUT = 5000
-JSCOVERAGE = ./node_modules/visionmedia-jscoverage/jscoverage --encoding=utf-8
-MOCHA = ./node_modules/mocha/bin/mocha
+JSCOVERAGE = ./node_modules/jscover/bin/jscover
 
 install:
 	@npm install
 
 test: install
-	@NODE_ENV=test $(MOCHA) --reporter $(REPORTER) --timeout $(TIMEOUT) \
-		$(MOCHA_OPTS) $(TESTS)
+	@NODE_ENV=test ./node_modules/mocha/bin/mocha \
+		--reporter $(REPORTER) \
+		--timeout $(TIMEOUT) \
+		$(TESTS)
 
 cov: install
-	-rm -rf lib.bak
-	-mv -f lib lib.bak && ${JSCOVERAGE} lib.bak lib
-	-$(MOCHA) --reporter html-cov --timeout $(TIMEOUT) $(MOCHA_OPTS) $(TESTS) > ./coverage.html
-	-rm -rf lib && mv -f lib.bak lib
-
-.PHONY: test install
+	@rm -rf ./lib-cov coverage.html
+	@$(JSCOVERAGE) lib lib-cov
+	@FILELOG_COV=1 $(MAKE) test REPORTER=dot
+	@FILELOG_COV=1 $(MAKE) test REPORTER=html-cov > coverage.html
+	
+.PHONY: test
