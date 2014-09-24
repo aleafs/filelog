@@ -1,9 +1,13 @@
 {
   "name": "filelog",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "author": "Aleafs Zhang (zhangxc83@gmail.com)",
   "contributors": [],
-  "homepage": "git@github.com:aleafs/filelog.git",
+  "homepage": "https://github.com/aleafs/filelog",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:aleafs/filelog.git"
+  },
   "description": "yet another file logger, with level control.",
   "keywords": [ "log", "level", "exception" ],
   "dependencies": {
