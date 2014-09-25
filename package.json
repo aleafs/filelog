@@ -20,7 +20,10 @@
   "devDependencies": {
     "mocha"  : ">=0.9.0",
     "should" : ">=0.4.2",
-    "jscover" : ">=0.2.4"
+    "blanket": "*",
+    "coveralls" : "*",
+    "travis-cov": "*",
+    "mocha-lcov-reporter": "*"
   },
   "main": "./index.js",
   "scripts": {
