@@ -24,9 +24,9 @@ describe('file log', function() {
     _me.notice("i am a bad boy");
     setTimeout(function() {
       var _text = fs.readFileSync(_me.__logfile(), 'utf-8');
-      _text.should.not.include("DEBUG:\t");
-      _text.should.include("NOTICE:\t");
-      _text.should.include("\"i am a bad boy\"");
+      _text.should.not.containEql("DEBUG:\t");
+      _text.should.containEql("NOTICE:\t");
+      _text.should.containEql("\"i am a bad boy\"");
       _me.close();
       done();
     }, 50);
@@ -52,12 +52,12 @@ describe('file log', function() {
     setTimeout(function() {
       var _text = fs.readFileSync(_fn, 'utf8');
 
-      _text.should.not.include("aa i will be ignore");
-      _text.should.not.include("NOTICE:\t");
-      _text.should.include("WARN:\t");
-      _text.should.include("ERROR:\t");
-      _text.should.include('debug2');
-      _text.should.not.include("ee i am a bad boy");
+      _text.should.not.containEql("aa i will be ignore");
+      _text.should.not.containEql("NOTICE:\t");
+      _text.should.containEql("WARN:\t");
+      _text.should.containEql("ERROR:\t");
+      _text.should.containEql('debug2');
+      _text.should.not.containEql("ee i am a bad boy");
 
       done();
     }, 50);
@@ -77,8 +77,8 @@ describe('file log', function() {
 
     setTimeout(function() {
       var _text = fs.readFileSync(_fn, 'utf8');
-      _text.should.include("LOG1");
-      _text.should.include("LOG2");
+      _text.should.containEql("LOG1");
+      _text.should.containEql("LOG2");
       done();
     }, 50);
   });
@@ -101,10 +101,10 @@ describe('file log', function() {
 
     setTimeout(function() {
       var _text = fs.readFileSync(_fn, 'utf8');
-      _text.should.not.include('I will not be loged');
-      _text.should.include(' nodejs.ErrorException:');
-      _text.should.include(err.stack);
-      _text.should.include('key2: ["value2\\naa"]');
+      _text.should.not.containEql('I will not be loged');
+      _text.should.containEql(' nodejs.ErrorException:');
+      _text.should.containEql(err.stack);
+      _text.should.containEql('key2: ["value2\\naa"]');
       done();
     }, 50);
   });
@@ -156,7 +156,7 @@ describe('file log', function() {
         setTimeout(function () {
           fs.readFile(_fn, 'utf8', function (e, data) {
             should.ok(!e);
-            data.should.include('test2');
+            data.should.containEql('test2');
             done();
           });
         }, 50);
@@ -175,7 +175,7 @@ describe('file log', function() {
     process.nextTick(function () {
       fs.readFile(_fn, 'utf8', function (e, data) {
         should.ok(!e);
-        data.should.include('time1');
+        data.should.containEql('time1');
         setTimeout(function () {
           _me.notice('time2');
           _me.__logfile().should.not.eql(_fn);
@@ -183,8 +183,8 @@ describe('file log', function() {
           process.nextTick(function () {
             fs.readFile(_fn, 'utf8', function (e, data) {
               should.ok(!e);
-              data.should.not.include('time1');
-              data.should.include('time2');
+              data.should.not.containEql('time1');
+              data.should.containEql('time2');
               _me.close();
               done();
             });
